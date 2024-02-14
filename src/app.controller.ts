@@ -1,7 +1,7 @@
 import { Controller, Get, Param, Patch, Post } from '@nestjs/common';
 import { AppService } from './app.service';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UserModel } from './entity/user.entity';
+import { Role, UserModel } from './entity/user.entity';
 import { Repository } from 'typeorm';
 
 @Controller()
@@ -14,7 +14,6 @@ export class AppController {
   @Post('users')
   postUser() {
     return this.userRepository.save({
-      title: 'test title'
     });
   }
 
@@ -22,6 +21,7 @@ export class AppController {
   getUsers() {
     return this.userRepository.find();
   }
+
   @Patch('users/:id')
   async patchUser(
     @Param('id') id: string
@@ -34,7 +34,13 @@ export class AppController {
 
     return this.userRepository.save({
       ...user,
-      title: user.title +'0',
+    })
+  }
+
+  @Post()
+  async createUserAndProfile(){
+    const user = await this.userRepository.save({
+
     })
   }
 }
